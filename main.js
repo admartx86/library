@@ -14,7 +14,7 @@ function addBookToLibrary() {
     let read = document.getElementById('read').checked;
     let newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
-    console.log(myLibrary);
+    displayBooks();
 }
 
 document.getElementById('book-form').addEventListener('submit', function(e) {
@@ -30,3 +30,28 @@ addBookButton.addEventListener('click', function() {
     BookForm.style.display = 'block';
 });
 
+function displayBooks() {
+    let bookshelf = document.getElementById('bookshelf');
+    bookshelf.innerHTML = '';
+    for (let i = 0; i < myLibrary.length; i++) {
+        console.log(myLibrary[i]);
+        let book = myLibrary[i];
+        let bookCard = document.createElement('div');
+        bookCard.setAttribute('class', 'book-card');
+        bookCard.innerHTML = 
+        `
+        <p>${book.title}<p>
+        <p>${book.author}<p>
+        <p>${book.pages}<p>
+        <p>${book.read}<p>
+        <button class="remove-book" onclick="removeCard()">Remove</button>
+        `
+        ;
+        bookshelf.appendChild(bookCard);
+    }
+}
+
+function removeCard(index) {
+    myLibrary.splice(index, 1);
+    displayBooks();
+}
