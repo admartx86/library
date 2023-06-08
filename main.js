@@ -7,6 +7,15 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
+Book.prototype.toggleRead = function() {
+    this.read = !this.read;
+}
+
+function toggleRead(index) {
+    myLibrary[index].toggleRead();
+    displayBooks();
+}
+
 function addBookToLibrary() {
     let title = document.getElementById('title').value;
     let author = document.getElementById('author').value;
@@ -34,17 +43,17 @@ function displayBooks() {
     let bookshelf = document.getElementById('bookshelf');
     bookshelf.innerHTML = '';
     for (let i = 0; i < myLibrary.length; i++) {
-        console.log(myLibrary[i]);
         let book = myLibrary[i];
         let bookCard = document.createElement('div');
         bookCard.setAttribute('class', 'book-card');
+        let readChecked = book.read ? 'checked' : '';
         bookCard.innerHTML = 
         `
         <p>${book.title}<p>
         <p>${book.author}<p>
         <p>${book.pages}<p>
-        <p>${book.read}<p>
-        <button class="remove-book" onclick="removeCard()">Remove</button>
+        <p>Read <input type="checkbox" ${readChecked} name="read" onclick="toggleRead(${i})"></radio><p>
+        <p><button class="remove-book" onclick="removeCard(${i})">Remove</button><p>
         `
         ;
         bookshelf.appendChild(bookCard);
